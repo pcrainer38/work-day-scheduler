@@ -2,6 +2,15 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 var dateDisplayEl = $('#currentDay');
+var schedHour = ['hour-9',
+'hour-10',
+'hour-11',
+'hour-12',
+'hour-13',
+'hour-14',
+'hour-15',
+'hour-16',
+'hour-17']
 
 
 function displayDate() {
@@ -9,15 +18,18 @@ function displayDate() {
     dateDisplayEl.text(today);
 }
 
+var now = dayjs().hour();
+console.log(now);
+
 function timeBlockColor() {
     var hour = dayjs().hour();
     
     $(".time-block").each(function() {
-        var currHour = parseInt($(this).attr('id'));
+        var schedHour = parseInt($(this).attr('id'));
         
-        if (currHour < hour) {
+        if (schedHour < now) {
             $(this).addClass('past');
-        } else if (currHour === hour) {
+        } else if (schedHour === now) {
             $(this).addClass('present');
         } else {
             $(this).addClass('future');
@@ -25,9 +37,14 @@ function timeBlockColor() {
 
     })
 }
+    
 
 
-$(function () {
+timeBlockColor();
+displayDate();
+
+
+// $(function () {
        
 
     // TODO: Add a listener for click events on the save button. This code should
@@ -42,9 +59,7 @@ $(function () {
     // the values of the corresponding textarea elements. HINT: How can the id
     // attribute of each time-block be used to do this?
   
-  });
+//   });
 
 
-  
-  displayDate();
   
