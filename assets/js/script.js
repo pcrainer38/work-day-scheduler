@@ -2,6 +2,8 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 var dateDisplayEl = $('#currentDay');
+var saveBtn = $('.saveBtn');
+var newTask = $('.description');
 var schedHour = ['hour-9',
 'hour-10',
 'hour-11',
@@ -25,21 +27,41 @@ function timeBlockColor() {
     var hour = dayjs().hour();
     
     $(".time-block").each(function() {
-        var schedHour = parseInt($(this).attr('id'));
+        var schedHour = parseInt($(this).attr('id').split('-')[1]);
         
         if (schedHour < now) {
             $(this).addClass('past');
+            $(this).removeClass('present');
+            $(this).removeClass('future');
         } else if (schedHour === now) {
             $(this).addClass('present');
+            $(this).removeClass('past');
+            $(this).removeClass('future');
         } else {
             $(this).addClass('future');
         }
-
     })
 }
-    
+
+function readTasksFromStorage() {
+    var task = localStorage.getItem('task');
+    if (task) {
+        task = JSON.parse(task);
+    } else {
+        task = [];
+    }
+    return task;
+}
+
+$(saveBtn).click(function() {
+    localStorage.setItem('task', JSON.stringify(task));
+
+})
 
 
+
+var task = readTasksFromStorage();
+task.push(newTask);
 timeBlockColor();
 displayDate();
 
