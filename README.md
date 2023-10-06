@@ -8,7 +8,8 @@ To create a simple calendar application that allows a user to save events for ea
 
 
 ## Screenshots
-
+![Alt text](Work-Day-Scheduler.png)
 
 
 ## Contributors
+Assistance by Tutor: Joem Casusi
