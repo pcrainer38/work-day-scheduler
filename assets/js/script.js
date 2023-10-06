@@ -1,18 +1,8 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
+
 var dateDisplayEl = $('#currentDay');
 var saveBtn = $('.saveBtn');
 var newTask = $('.description');
-var schedHour = ['hour-9',
-'hour-10',
-'hour-11',
-'hour-12',
-'hour-13',
-'hour-14',
-'hour-15',
-'hour-16',
-'hour-17']
+var schedHour = ['hour-9', 'hour-10', 'hour-11', 'hour-12', 'hour-13', 'hour-14', 'hour-15', 'hour-16', 'hour-17']
 
 
 function displayDate() {
@@ -44,24 +34,48 @@ function timeBlockColor() {
 }
 
 function readTasksFromStorage() {
-    var task = localStorage.getItem('task');
-    if (task) {
-        task = JSON.parse(task);
-    } else {
-        task = [];
-    }
-    return task;
+    $(".time-block").each(function() {
+        console.log(this.id)
+        // $(this) = the div parent element
+
+        // var task = localStorage.getItem(this.id);
+        var task = localStorage.getItem($(this).attr("id"))
+
+        console.log(task);
+
+        // var textArea = this.children[1];
+        var textArea = $(this).children("textarea")
+
+        console.log(textArea)
+
+        // textArea.value = task
+        textArea.val(task)
+        
+    })
+
 }
 
-$(saveBtn).click(function() {
-    localStorage.setItem('task', JSON.stringify(task));
+$(saveBtn).click(function(event) {
+    // var textArea = event.currentTarget.previousElementSibling;
+    // var task = textArea.value;
 
+    var textArea = $(event.currentTarget).siblings("textarea")
+    var task = textArea.val()
+    
+    // var parent = event.currentTarget.parentElement;
+    // var key = parent.id;
+
+    var parent = $(event.currentTarget).parent();
+    var key = parent.attr("id")
+
+    event.preventDefault();
+    localStorage.setItem(key, task);
+    
+    
 })
 
 
-
-var task = readTasksFromStorage();
-task.push(newTask);
+readTasksFromStorage();
 timeBlockColor();
 displayDate();
 
